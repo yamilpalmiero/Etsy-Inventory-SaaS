@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Tiendas - Etsy Inventory{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🏪 Mis Tiendas Conectadas</h2>
+        <a href="{% url 'etsy_auth_init' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Conectar Tienda Etsy
+        </a>
+    </div>
+
+    {% if stores %}
+        <div class="row">
+            {% for store in stores %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ store.shop_name }}</h5>
+                            <p class="card-text text-muted">
+                                <small>ID: {{ store.etsy_shop_id }}</small>
+                            </p>
+                            
+                            <div class="mb-3">
+                                {% if store.is_active %}
+                                    <span class="badge bg-success">✓ Activa</span>
+                                {% else %}
+                                    <span class="badge bg-danger">✗ Inactiva</span>
+                                {% endif %}
+                                
+                                {% if store.sync_enabled %}
+                                    <span class="badge bg-info">🔄 Sync habilitada</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">🔄 Sync deshabilitada</span>
+                                {% endif %}
+                            </div>
+                            
+                            {% if store.last_sync %}
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Última sincronización: {{ store.last_sync|date:"d/m/Y H:i" }}
+                                    </small>
+                                </p>
+                            {% else %}
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Aún no se ha sincronizado
+                                    </small>
+                                </p>
+                            {% endif %}
+                            
+                            <div class="mt-3">
+                                <a href="{% url 'store_disconnect' store.id %}" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Estás seguro de desconectar esta tienda?')">
+                                    Desconectar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center p-5" role="alert">
+            <h4 class="alert-heading">📦 No tienes tiendas conectadas</h4>
+            <p class="mb-4">Conecta tu primera tienda de Etsy para comenzar a sincronizar tu inventario</p>
+            <a href="{% url 'etsy_auth_init' %}" class="btn btn-success btn-lg">
+                Conectar Tienda Etsy
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Información adicional -->
+    <div class="card mt-4 bg-light">
+        <div class="card-body">
+            <h5 class="card-title">ℹ️ Información</h5>
+            <ul class="mb-0">
+                <li>Al conectar una tienda, autorizarás el acceso a tu inventario y ventas de Etsy</li>
+                <li>La sincronización se realizará automáticamente cada 15 minutos</li>
+                <li>Puedes desconectar una tienda en cualquier momento</li>
+                <li>Los datos se mantendrán seguros y cifrados</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

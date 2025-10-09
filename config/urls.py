@@ -21,5 +21,6 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('auth/etsy/', include('stores.urls')),  # 👈 AGREGAR ESTA LÍNEA
     path('', lambda request: redirect('login')),  # Redirigir raíz a login
 ]
