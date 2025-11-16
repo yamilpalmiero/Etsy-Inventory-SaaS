@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
-import os
+import os, dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Ajustado para la estructura de settings modular
@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 if 'DATABASE_URL' in os.environ:
     # Producción (Render)
-    import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
