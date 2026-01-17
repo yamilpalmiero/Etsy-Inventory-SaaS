@@ -46,13 +46,13 @@ def etsy_auth_callback(request):
     state = request.GET.get('state')
     if state != request.session.get('oauth_state'):
         messages.error(request, 'Error de seguridad en la autenticación')
-        return redirect('store_list')
+        return redirect('stores:store_list')
     
     # Obtener el código de autorización
     code = request.GET.get('code')
     if not code:
         messages.error(request, 'No se recibió código de autorización')
-        return redirect('store_list')
+        return redirect('stores:store_list')
     
     # Intercambiar código por tokens
     token_url = "https://api.etsy.com/v3/public/oauth/token"
@@ -88,14 +88,14 @@ def etsy_auth_callback(request):
         action = 'conectada' if created else 'actualizada'
         messages.success(request, f'¡Tienda "{shop_info["shop_name"]}" {action} exitosamente!')
         
-        return redirect('store_list')
+        return redirect('stores:store_list')
         
     except requests.exceptions.RequestException as e:
         messages.error(request, f'Error al conectar con Etsy: {str(e)}')
-        return redirect('store_list')
+        return redirect('stores:store_list')
     except Exception as e:
         messages.error(request, f'Error inesperado: {str(e)}')
-        return redirect('store_list')
+        return redirect('stores:store_list')
 
 
 def get_shop_info(access_token):
@@ -146,4 +146,4 @@ def store_disconnect(request, store_id):
     except Store.DoesNotExist:
         messages.error(request, 'Tienda no encontrada')
     
-    return redirect('store_list')
+    return redirect('stores:store_list')
