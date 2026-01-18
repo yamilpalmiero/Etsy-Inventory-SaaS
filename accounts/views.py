@@ -10,7 +10,7 @@ def register_view(request):
     Vista de registro de nuevo usuario.
     """
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('accounts:dashboard')
     
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -19,7 +19,7 @@ def register_view(request):
             username = form.cleaned_data.get('username')
             messages.success(request, f'¡Cuenta creada exitosamente para {username}!')
             login(request, user)  # Login automático después del registro
-            return redirect('dashboard')
+            return redirect('accounts:dashboard')
     else:
         form = UserRegisterForm()
     
@@ -31,7 +31,7 @@ def login_view(request):
     Vista de inicio de sesión.
     """
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('accounts:dashboard')
     
     if request.method == 'POST':
         form = UserLoginForm(request, data=request.POST)
@@ -57,7 +57,7 @@ def logout_view(request):
     """
     logout(request)
     messages.info(request, 'Has cerrado sesión exitosamente.')
-    return redirect('login')
+    return redirect('accounts:login')
 
 
 @login_required
