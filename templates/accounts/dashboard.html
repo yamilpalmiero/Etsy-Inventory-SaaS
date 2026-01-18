@@ -1,21 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container mt-5">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
     <h1>Dashboard</h1>
-    
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">🛍️ Mis Tiendas</h5>
-                    <p class="card-text">Administra tus tiendas de Etsy conectadas.</p>
-                    <a href="{% url 'stores:store_list' %}" class="btn btn-primary">
-                        Ver Tiendas
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+    <p>Hola {{ user.username }}</p>
+</body>
+</html>
