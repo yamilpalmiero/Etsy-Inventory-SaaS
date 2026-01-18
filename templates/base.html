@@ -34,7 +34,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}">
+            <a class="navbar-brand" href="{% if user.is_authenticated %}{% url 'accounts:dashboard' %}{% else %}{% url 'accounts:login' %}{% endif %}">
                 🛍️ Etsy Inventory
             </a>
             
@@ -46,23 +46,23 @@
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                            <a class="nav-link" href="{% url 'accounts:dashboard' %}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'store_list' %}">🏪 Mis Tiendas</a>
+                            <a class="nav-link" href="{% url 'stores:store_list' %}">🏪 Mis Tiendas</a>
                         </li>
                         <li class="nav-item">
                             <span class="nav-link">👤 {{ user.username }}</span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                            <a class="nav-link" href="{% url 'accounts:logout' %}">Cerrar Sesión</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                            <a class="nav-link" href="{% url 'accounts:login' %}">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
+                            <a class="nav-link" href="{% url 'accounts:register' %}">Registrarse</a>
                         </li>
                     {% endif %}
                 </ul>
